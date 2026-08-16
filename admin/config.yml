@@ -1,0 +1,133 @@
+# Sveltia CMS configuration for the Homepage site.
+# Documentation: https://sveltiacms.app/en/docs/
+#
+# Sign in with a fine-grained GitHub Personal Access Token (PAT) that has
+# "Contents: Read and write" access to this repository, or via a GitHub OAuth
+# app if one is configured. See 使用说明.md for step-by-step instructions.
+
+backend:
+  name: github
+  repo: yangyang-li/Homepage
+  branch: main
+
+# Uploaded images are committed into assets/img/.
+media_folder: assets/img
+public_folder: assets/img
+
+site_url: https://yangyang-li.github.io/Homepage/
+display_url: https://yangyang-li.github.io/Homepage/
+
+locale: en
+
+collections:
+  - name: pages
+    label: Pages
+    label_singular: Page
+    folder: _pages
+    create: false
+    delete: false
+    extension: md
+    format: frontmatter
+    editor:
+      preview: false
+    fields:
+      - { label: "Layout", name: "layout", widget: "select", options: ["about", "page", "post"], default: "page" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Permalink", name: "permalink", widget: "string", hint: "Path such as /contact/. Keep the leading and trailing slash." }
+      - { label: "Description", name: "description", widget: "string", required: false }
+      - { label: "Show in navigation", name: "nav", widget: "boolean", required: false }
+      - { label: "Navigation order", name: "nav_order", widget: "number", value_type: "int", required: false }
+      - { label: "Subtitle", name: "subtitle", widget: "string", required: false }
+      - { label: "Selected papers", name: "selected_papers", widget: "boolean", required: false }
+      - { label: "Show social links", name: "social", widget: "boolean", required: false }
+      - { label: "Redirect", name: "redirect", widget: "boolean", required: false }
+      - label: "Profile"
+        name: "profile"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "Align", name: "align", widget: "select", options: ["left", "right"], default: "right" }
+          - { label: "Image", name: "image", widget: "image", required: false }
+          - { label: "Circular image", name: "image_circular", widget: "boolean", default: false }
+      - label: "Announcements"
+        name: "announcements"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "Enabled", name: "enabled", widget: "boolean", default: false }
+      - label: "Latest posts"
+        name: "latest_posts"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "Enabled", name: "enabled", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown", hint: "Do not edit the <style> block at the top of this page." }
+
+  - name: socials
+    label: Social & Identity Links
+    files:
+      - file: _data/socials.yml
+        name: socials
+        label: Social links
+        format: yml
+        fields:
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "ORCID", name: "orcid_id", widget: "string" }
+          - { label: "ResearchGate profile", name: "research_gate_profile", widget: "string" }
+
+  - name: homepage_publications
+    label: Homepage Publications
+    files:
+      - file: _data/homepage_publications.yml
+        name: homepage_publications
+        label: Homepage publications
+        format: yml
+        fields:
+          - label: "Social computing"
+            name: "social"
+            widget: "object"
+            fields:
+              - { label: "Section title", name: "title", widget: "string" }
+              - { label: "BibTeX keys", name: "keys", widget: "list", hint: "Keys must match entries in _bibliography/papers.bib" }
+          - label: "Graph learning"
+            name: "graph"
+            widget: "object"
+            fields:
+              - { label: "Section title", name: "title", widget: "string" }
+              - { label: "BibTeX keys", name: "keys", widget: "list" }
+          - label: "Systems"
+            name: "systems"
+            widget: "object"
+            fields:
+              - { label: "Section title", name: "title", widget: "string" }
+              - { label: "BibTeX keys", name: "keys", widget: "list" }
+
+  - name: intellectual_property
+    label: Intellectual Property
+    files:
+      - file: _data/intellectual_property.yml
+        name: intellectual_property
+        label: Intellectual property
+        format: yml
+        fields:
+          - label: "Invention patents"
+            name: "invention_patents"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Number", name: "number", widget: "string", required: false }
+              - { label: "Status", name: "status", widget: "string", required: false }
+          - label: "Design patents"
+            name: "design_patents"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Number", name: "number", widget: "string", required: false }
+              - { label: "Status", name: "status", widget: "string", required: false }
+          - label: "Software copyrights"
+            name: "software_copyrights"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Number", name: "number", widget: "string", required: false }
+              - { label: "Status", name: "status", widget: "string", required: false }
